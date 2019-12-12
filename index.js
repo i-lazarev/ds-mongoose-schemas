@@ -2,7 +2,11 @@ const faker = require("faker");
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-    firstName: String
+    email:String,
+    password:String,
+    firstName: String,
+    lastName: String,
+    isAdmin:Number
 },{versionKey: false})
 
 const User = mongoose.model("users", UserSchema)
@@ -18,7 +22,11 @@ mongoose.connection.on("open", () => {
     const userCreate = function(){
         for(i=0; i<5; i++){
             User.create({
-                firstName: faker.name.findName()
+                email:faker.internet.email(),
+                password:faker.internet.password(),
+                firstName: faker.name.firstName(),
+                lastName: faker.name.lastName(),
+                isAdmin:0
             })
             .then(user => {console.log(user)})
         }
